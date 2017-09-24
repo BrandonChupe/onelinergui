@@ -1,86 +1,32 @@
-import clipboard #custom module containing our primary functions for things.
-import gi
-gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk
-from autogitupdate import update
+import interface
+import pickle
+import requests
+from bs4 import BeautifulSoup
+from datetime import date
 
-#updateusinggit
+def checkupdate(version, day): 
+    if date.today() > day && importversion() > version:
+    	pass
 
-update()
+    	
+def importversion():
+	response = requests.get('https://raw.githubusercontent.com/BrandonChupe/onelinergui/master/version.txt')
+	html = response.content
 
+	soup = BeautifulSoup(html, 'html.parser')
+	return soup.prettify()
 
-class MyWindow(Gtk.Window):
+def importdate():
+    day = pickle.load( open( "lastupdate.p", "rb"))
 
-    def __init__(self):
+    return day
 
-        #window title
-        Gtk.Window.__init__(self, title="PYTHON SAVES TEH WORLD")
-
-        #setting up button arrangement and spacing.
-        self.box = Gtk.Box(spacing=6)
-        self.add(self.box)
-
-
-        #Creating the actual butttons.
-        self.du = Gtk.Button(label="du")
-        self.du.connect("clicked", self.on_du_clicked)
-        self.box.pack_start(self.du, True, True, 0)
-
-        self.wplogin = Gtk.Button(label="wplogin")
-        self.wplogin.connect("clicked", self.on_wplogin_clicked)
-        self.box.pack_start(self.wplogin, True, True, 0)
-
-        self.serial = Gtk.Button(label="serial")
-        self.serial.connect("clicked", self.on_serial_clicked)
-        self.box.pack_start(self.serial, True, True, 0)
-
-        self.tailall = Gtk.Button(label="tailall")
-        self.tailall.connect("clicked", self.on_tailall_clicked)
-        self.box.pack_start(self.tailall, True, True, 0)
-
-        self.handlers = ["54", "55", "56", "70"]
-        self.handlers_combo = Gtk.ComboBoxText()
-        self.handlers_combo.set_entry_text_column(0)
-        self.handlers_combo.connect("changed", self.on_handlers_combo_changed)
-        for handler in self.handlers:
-            self.handlers_combo.append_text(handler)
-        self.box.pack_start(self.handlers_combo, True, True, 0)
-
-        self.whyme = Gtk.Button(label="whyme")
-        self.whyme.connect("clicked", self.on_whyme_clicked)
-        self.box.pack_start(self.whyme, True, True, 0)
-
-        self.wau = Gtk.Button(label="wau")
-        self.wau.connect("clicked", self.on_wau_clicked)
-        self.box.pack_start(self.wau, True, True, 0)
+def exportdate(day):
+    pickle.dump( day, open ( "lastupdate.p", "wb"))
 
 
-    #Methods to be ran upon button click.
-    def on_du_clicked(self, widget):
-        clipboard.du()
+version = .1
 
-    def on_wplogin_clicked(self, widget):
-        clipboard.wplogin()
+checkupdate(version, importdate())
 
-    def on_serial_clicked(self, widget):
-        clipboard.serial()   
-
-    def on_tailall_clicked(self, widget):
-        clipboard.tailall()
-
-    def on_handlers_combo_changed(self, combo):
-        phpVersion = combo.get_active_text()
-        clipboard.addhandler(phpVersion)
-
-    def on_whyme_clicked(self, widget):
-        clipboard.whyme()
-
-    def on_wau_clicked(self, widget):
-        clipboard.wau()
-
-
-#Making sure the window actually works and closes.
-win = MyWindow()
-win.connect("delete-event", Gtk.main_quit)
-win.show_all()
-Gtk.main()
+interface.guiloop()
