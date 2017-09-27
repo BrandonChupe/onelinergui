@@ -9,15 +9,15 @@ class MyWindow(Gtk.Window):
 
     def __init__(self):
 
-        #window title
+        #Window title.
         Gtk.Window.__init__(self, title="PYTHON SAVES TEH WORLD")
 
-        #setting up button arrangement and spacing.
+        #Sets up button arrangement and spacing.
         self.box = Gtk.Box(spacing=6)
         self.add(self.box)
 
 
-        #Creating the actual butttons.
+        #Creates the actual butttons.
         self.du = Gtk.Button(label="du")
         self.du.connect("clicked", self.on_du_clicked)
         self.box.pack_start(self.du, True, True, 0)
@@ -52,7 +52,7 @@ class MyWindow(Gtk.Window):
         self.box.pack_start(self.wau, True, True, 0)
 
 
-    #Methods to be ran upon button click.
+    #Functions to be ran upon button click.
     def on_du_clicked(self, widget):
         clipboard.du()
 
@@ -75,8 +75,8 @@ class MyWindow(Gtk.Window):
     def on_wau_clicked(self, widget):
         clipboard.wau()
 
-#Opens the window and allows it to close.
 def gui_loop():
+"""Opens the primary gui window."""
     win = MyWindow()
     win.connect("delete-event", Gtk.main_quit)
     win.show_all()

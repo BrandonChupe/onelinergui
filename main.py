@@ -5,7 +5,7 @@ import importlib
 from bs4 import BeautifulSoup
 from datetime import date
 
-#imports the module containing the majority of our script.
+#imports the module containing the majority of the script.
 import gui
 
 class UpdateAvailable(Gtk.Dialog):
@@ -48,7 +48,7 @@ class DialogWindow(Gtk.Window):
 
 
 
-def check_update(version, day):
+def check_update(day):
 """If it has not checked for an update today it will check for one using the remote version file and local version file.
    It will also update the lastupdate file with the most recent date that it checked for an update.
    """
@@ -91,7 +91,7 @@ def export_date(day):
     pickle.dump( day, open ( "lastupdate.p", "wb"))
 
 def get_repository_files(url):
-"""Gets a list of files within the github repository using GitHub's restful API. Returns it as a list of download urls."""
+"""Obtains a list of files within the github repository using GitHub's restful API. Returns it as a list of download urls."""
     fileList = []
 
 
@@ -113,14 +113,14 @@ def download_file(url):
     return local_filename
 
 def guiwindow():
-"""Opens the dialogue window we use to confirm that a user wishes to update to the latest version."""
+"""Opens a dialogue window to confirm that the user wishes to update to the latest version."""
     win = DialogWindow()
     win.connect("delete-event", Gtk.main_quit)
     win.show_all()
     Gtk.main()
 
 def perform_update():
-"""Downloads the updated repository files and reloads our cusotm module."""
+"""Downloads the updated repository files and reloads the custom module."""
     fileList = get_repository_files(REPOSITORY_URL)
 
     for each in fileList:
@@ -130,9 +130,8 @@ def perform_update():
 
 #Change this if you create your own branch. Replace "BrandonChupe" with your github user.
 REPOSITORY_URL = 'https://api.github.com/repos/BrandonChupe/onelinergui/contents'
-VERSION = .1
 
-if check_update(VERSION, import_date()) == True:
+if check_update(import_date()) == True:
     guiwindow()
 
 
