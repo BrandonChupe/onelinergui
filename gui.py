@@ -1,10 +1,9 @@
 # Module containing the the function we use to send items to our cliboard.
 import clipboard
 
-from gi.repository import Gtk
 import gi
 gi.require_version('Gtk', '3.0')
-
+from gi.repository import Gtk
 
 class MyWindow(Gtk.Window):
 
