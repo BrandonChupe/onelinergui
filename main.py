@@ -87,17 +87,7 @@ def download_file(url):
 
     return local_filename
 
-
-def guiwindow():
-    """Opens a dialogue window to confirm that the user wishes to update to the
-    latest version.
-    """
-    win = DialogWindow()
-    win.connect("delete-event", Gtk.main_quit)
-    win.show_all()
-    Gtk.main()
-
-
+# Need to make a dialogue for this.
 def perform_update():
     """Downloads the updated repository files and reloads the custom module."""
     fileList = get_repository_files(REPOSITORY_URL)
@@ -113,7 +103,7 @@ REPOSITORY_URL = ('https://api.github.com/repos/BrandonChupe',
                   '/onelinergui/contents')
 
 if check_update(import_date()):
-    print("yes")
+    perform_update()
 
 
 gui.gui_loop()
