@@ -93,13 +93,13 @@ def perform_update():
     fileList = get_repository_files(REPOSITORY_URL)
 
     for each in fileList:
-        download_file(each)
+        download_file(fileList[each])
 
     importlib.reload(gui)
 
 # Change this if you create your own branch. Replace "BrandonChupe" with
 # your github user.
-REPOSITORY_URL = ('https://api.github.com/repos/BrandonChupe',
+REPOSITORY_URL = ('https://api.github.com/repos/BrandonChupe'\
                   '/onelinergui/contents')
 
 if check_update(import_date()):
