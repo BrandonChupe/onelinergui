@@ -93,7 +93,7 @@ def perform_update():
     fileList = get_repository_files(REPOSITORY_URL)
 
     for each in fileList:
-        download_file(fileList[each])
+        download_file(each)
 
     importlib.reload(gui)
 
