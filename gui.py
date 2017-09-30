@@ -33,6 +33,10 @@ class MyWindow(Gtk.Window):
         self.tailall.connect("clicked", self.on_tailall_clicked)
         self.box.pack_start(self.tailall, True, True, 0)
 
+        self.strace = Gtk.Button(label="strace")
+        self.strace.connect("clicked", self.on_strace_clicked)
+        self.box.pack_start(self.strace, True, True, 0)
+
         # Creates a dropdown filled with options from the list handlers.
         self.handlers = ["54", "55", "56", "70"]
         self.handlers_combo = Gtk.ComboBoxText()
@@ -62,6 +66,9 @@ class MyWindow(Gtk.Window):
 
     def on_tailall_clicked(self, widget):
         clipboard.tail_all()
+
+    def on_strace_clicked(self, widget):
+        clipboard.strace()
 
     def on_handlers_combo_changed(self, combo):
         phpVersion = combo.get_active_text()

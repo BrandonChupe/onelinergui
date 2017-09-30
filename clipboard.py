@@ -9,7 +9,7 @@ def send_to_clipboard(data):
     quoting when it passes content into clipboard.
     """
     df = pandas.DataFrame([data])
-    df.to_clipboard(index=False, header=False, quoting=csv.QUOTE_NONE)
+    df.to_clipboard(index=False, header=False, excel=False)
 
 
 def read_from_file(input):
@@ -55,6 +55,10 @@ def tail_all():
     tailall = "tail -n0 -f $(find -type f -name \'error_log\')"
     send_to_clipboard(tailall)
 
+def strace():
+    """Sends an strace command to the clipboard"""
+    strace = "strace -Ttfv -s 4096 -o ~/.strace php"
+    send_to_clipboard(strace)
 
 # Need to add a version for easy apache 4.
 def add_handler(phpVersion):
