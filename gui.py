@@ -38,13 +38,14 @@ class MyWindow(Gtk.Window):
         self.box.pack_start(self.strace, True, True, 0)
 
         # Creates a dropdown filled with options from the list handlers.
-        self.handlers = ["54", "55", "56", "70"]
+        self.handlers = ["handlers", "54", "55", "56", "70", "71"]
         self.handlers_combo = Gtk.ComboBoxText()
         self.handlers_combo.set_entry_text_column(0)
         self.handlers_combo.connect("changed", self.on_handlers_combo_changed)
         for handler in self.handlers:
             self.handlers_combo.append_text(handler)
         self.box.pack_start(self.handlers_combo, True, True, 0)
+        self.handlers_combo.set_active(0)
 
         self.whyme = Gtk.Button(label="whyme")
         self.whyme.connect("clicked", self.on_whyme_clicked)
@@ -72,7 +73,12 @@ class MyWindow(Gtk.Window):
 
     def on_handlers_combo_changed(self, combo):
         phpVersion = combo.get_active_text()
-        clipboard.add_handler(phpVersion)
+
+        if phpVersion == "handlers":
+            self.handlers_combo.set_active(0)
+        else: 
+            clipboard.add_handler(phpVersion)
+            self.handlers_combo.set_active(0)
 
     def on_whyme_clicked(self, widget):
         clipboard.why_me()
