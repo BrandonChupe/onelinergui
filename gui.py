@@ -25,6 +25,10 @@ class MyWindow(Gtk.Window):
         self.wplogin.connect("clicked", self.on_wplogin_clicked)
         self.box.pack_start(self.wplogin, True, True, 0)
 
+        self.mysql_dump = Gtk.Button(label="mysql_dump")
+        self.mysql_dump.connect("clicked", self.on_mysql_dump_clicked)
+        self.box.pack_start(self.mysql_dump, True, True, 0)
+
         self.serial = Gtk.Button(label="serial")
         self.serial.connect("clicked", self.on_serial_clicked)
         self.box.pack_start(self.serial, True, True, 0)
@@ -55,12 +59,19 @@ class MyWindow(Gtk.Window):
         self.wau.connect("clicked", self.on_wau_clicked)
         self.box.pack_start(self.wau, True, True, 0)
 
+        self.whyjames = Gtk.Button(label="whyjames")
+        self.whyjames.connect("clicked", self.on_whyjames_clicked)
+        self.box.pack_start(self.whyjames, True, True, 0)
+
     # Functions to be ran upon button click.
     def on_du_clicked(self, widget):
         clipboard.du()
 
     def on_wplogin_clicked(self, widget):
         clipboard.wp_login()
+
+    def on_mysql_dump_clicked(self, widget):
+        clipboard.mysql_dump()
 
     def on_serial_clicked(self, widget):
         clipboard.serial()
@@ -86,6 +97,8 @@ class MyWindow(Gtk.Window):
     def on_wau_clicked(self, widget):
         clipboard.wau()
 
+    def on_whyjames_clicked(self, widget):
+        clipboard.why_james()
 
 def gui_loop():
     """Opens the primary gui window."""

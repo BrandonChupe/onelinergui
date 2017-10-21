@@ -2,6 +2,7 @@ from sys import argv
 from time import strftime
 import pandas
 import csv
+import re
 
 
 def send_to_clipboard(data):
@@ -9,8 +10,24 @@ def send_to_clipboard(data):
     quoting when it passes content into clipboard.
     """
     df = pandas.DataFrame([data])
-    df.to_clipboard(index=False, header=False, excel=False)
+    df.to_clipboard(index=False, header=False, excel=False, )
 
+
+def read_from_clipboard():
+    """reads data from clipboard as a list of columns. Regex is applied to clean
+    the data of any braces or quotes."""
+    try:
+        clipboard_data = pandas.read_clipboard(index_col=False, header=None).values
+        clipboard_data = clean_text(str(clipboard_data))
+    except ValueError:
+        clipboard_data = False
+    return clipboard_data
+
+
+def clean_text(data):
+    """Cleans braces and quotes from incoming data."""
+    new_data = re.sub(r'[\'\[\]]', '', data)
+    return new_data
 
 def read_from_file(input):
     """Alternative function for when we read one liners from a file. Saving for
@@ -50,6 +67,14 @@ def wp_login():
     send_to_clipboard(wpLogin)
 
 
+def mysql_dump():
+    mysql_dump = "mysqldump -u$(awk -F\\' '/DB_U/ { print $4 }' "\
+    "./wp-config.php) -p$(awk -F\\' '/DB_P/ { print $4 }' ./wp-config.php) "\
+    "$(awk -F\\' '/DB_N/ { print $4 }' ./wp-config.php) > "\
+    "~/$(awk -F\\' '/DB_N/ { print $4 }' ./wp-config.php).$(date +%s).bak"
+    send_to_clipboard(mysql_dump)
+
+
 def tail_all():
     """Tail all of the error logs. ALL OF THEM"""
     tailall = "tail -n0 -f $(find -type f -name \'error_log\')"
@@ -84,3 +109,16 @@ def wau():
     """WAUWAUWAUWAUWAUWAUWAU"""
     wau = "WAU"
     send_to_clipboard(wau)
+
+
+def why_james():
+    """WHY'D YOU DO IT, JAMES. WHY!?"""
+    name = read_from_clipboard()
+    if name:
+        name = name.upper()
+    else:
+        name = "PlaceNameInClipboardFirst"
+    why_james = "WHY'D YOU BREAK THE SERVER, " + name + ". WHAT'D IT EVER DO TO"\
+        " YOU, " + name + "? IT WAS A DEFENSELESS BEAUTIFUL CREATURE, " + name\
+        + ". YOU KILLED IT, " + name + "."
+    send_to_clipboard(why_james)
