@@ -104,7 +104,8 @@ def perform_update():
 REPOSITORY_URL = ('https://api.github.com/repos/BrandonChupe'\
                   '/onelinergui/contents')
 
-os.chdir(os.path.dirname(sys.argv[0]))
+if os.path.dirname(sys.argv[0]):
+    os.chdir(os.path.dirname(sys.argv[0]))
 
 if check_update(import_date()):
     perform_update()
