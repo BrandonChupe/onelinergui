@@ -1,4 +1,7 @@
 # onelinergui
+
+!!!This script is currently undergoing large revisions.!!!
+
 This script is primarily meant to send oneliners or various other useful things into one's clipboard using a graphical interface rather than hotkeys or phrases from autokeys.
 
 
